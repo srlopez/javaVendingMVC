@@ -2,7 +2,6 @@
     "java.project.referencedLibraries": {
         "include": [
             "lib/**/*.jar",
-            "c:\\Users\\santi\\source\\dev\\javaPlantillaMVC\\javaLib\\javaLib.jar",
             "c:\\Users\\santi\\source\\dev\\javaVendingMVC\\javaMaquina\\javaMaquina.jar"
         ],
         "exclude": [

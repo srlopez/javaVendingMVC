@@ -1,5 +1,8 @@
 # Ejemplo para creación de librería
 
+Este proyecto es la creación de una librería que simula una máquina vending.
+La interfaz para interactuar se crea en el proyecto javaVendingConsole para presentar la arquitectura MVC.
+
 ### Creacion de la librería jarfile
 En el directorio del proyecto, ejecuta estos comandos PS
 ```bash
