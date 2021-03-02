@@ -6,7 +6,7 @@ import vending.hardware.subsistemas.productos.Dispensador;
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.seguridad.*;
 import vending.producto.*;
-import app.ui.*;
+import ui.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {

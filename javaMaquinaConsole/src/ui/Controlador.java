@@ -2,13 +2,13 @@ package ui;
 
 import vending.hardware.Maquina;
 import vending.hardware.subsistemas.pagos.Efectivo;
-import vending.Constantes;
-import vending.Modo;
+import vending.PagoStatus;
+import vending.ModoTerminal;
 
 public class Controlador {
     Maquina maquina;
     Terminal terminal;
-    Modo modo;
+    ModoTerminal modo;
 
     public Controlador(Terminal terminal, Maquina maquina) {
         this.maquina = maquina;
@@ -73,29 +73,33 @@ public class Controlador {
 
     // SUPERUSUARIO + PIN
     void validarCambioDeModo() {
-        if (modo == Modo.NORMAL) {
+        if (modo == ModoTerminal.NORMAL) {
             String pin = terminal.leerPin();
             if (maquina.esPinValido(pin))
-                terminal.establecerModo(Modo.ADMIN);
+                terminal.establecerModo(ModoTerminal.ADMIN);
         } else
-            terminal.establecerModo(Modo.NORMAL);
+            terminal.establecerModo(ModoTerminal.NORMAL);
     }
 
     // MOSTRAR PRODUCTOS
     void UseCaseA() {
         String[][] muestra;
-        if (modo == Modo.ADMIN)
+        if (modo == ModoTerminal.ADMIN)
             muestra = maquina.mostrarProductosAdmin();
         else
-            muestra = maquina.mostrarProductos();
+            muestra = maquina.mostrarProductosString();
         terminal.mostrarMuestra(muestra);
     }
 
     // RETIRAR PRODUCTO
     int UseCaseB() {
         try {
-            String[][] muestra = maquina.mostrarProductos();
+            // DTO String
+            String[][] muestra = maquina.mostrarProductosString();
             terminal.mostrarMuestra(muestra);
+            // DTO XML
+            // String muestra = maquina.mostrarProductosXML();
+            // terminal.parseMuestraXML(muestra);
             int xy = terminal.leerPosicion();
             if (!maquina.esXYValido(xy)) {
                 terminal.mostrarMsg("Coordenadas inválidas");
@@ -126,16 +130,16 @@ public class Controlador {
             // CONFIRMAR PAGO
             double precio = maquina.obtenerPrecio(xy);
             switch (maquina.esPagoValido(pago, precio)) {
-                case Constantes.PAGO_INVALIDO:
+                case PagoStatus.PAGO_INVALIDO:
                     terminal.mostrarMsg("ERROR: Número de monedas superior al admitido");
                     return -1;
-                case Constantes.PAGO_SIN_CAMBIOS:
+                case PagoStatus.PAGO_SIN_CAMBIOS:
                     terminal.mostrarMsg("ERROR: No disponemos de cambios");
                     return -1;
-                case Constantes.PAGO_INSUFICIENTE:
+                case PagoStatus.PAGO_INSUFICIENTE:
                     terminal.mostrarMsg("Importe inferior al precio de %.2f€\n", precio);
                     return -1;
-                case Constantes.PAGO_VALIDO:
+                case PagoStatus.PAGO_VALIDO:
                     Efectivo cambio = maquina.procederAlPago(pago, precio);// ControlPAgos
                     String producto = maquina.efectuarRetirada(xy); // Dispensador
                     terminal.mostrarMsg("Su `%s` %.2f€. Gracias\n", producto, precio);

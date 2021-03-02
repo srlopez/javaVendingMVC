@@ -1,21 +1,37 @@
 package ui;
 
+import java.io.StringReader;
 import java.util.Collections;
 import java.util.Scanner;
 
-import vending.Modo;
+// XML import
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+// XML
+import org.xml.sax.InputSource;
+
+import vending.ModoTerminal;
 import vending.hardware.subsistemas.pagos.Efectivo;
 
 public class Terminal {
     private Scanner input = new Scanner(System.in);
     private String nombre;
-    private Modo modo;
+    private ModoTerminal modo;
     private String normalOpt = "M12AVBP";
     private String adminOpt = normalOpt + "345CRDIEF";
 
     public Terminal(String nombre) {
         this.nombre = nombre;
-        this.modo = Modo.NORMAL;
+        this.modo = ModoTerminal.NORMAL;
     }
 
     // === PRESENTACION DE INFORMACION ===
@@ -24,26 +40,26 @@ public class Terminal {
         // cls();
         pln();
         pf("   === %-15s ===\n", this.nombre);
-        pf("   === %-15s %s\n", cabecera, modo.toString() == Modo.ADMIN.toString() ? "ADM" : "===");
+        pf("   === %-15s %s\n", cabecera, modo.toString() == ModoTerminal.ADMIN.toString() ? "ADM" : "===");
         pln();
     }
 
-    // MENU 
-    public Modo mostrarMenu() {
+    // MENU
+    public ModoTerminal mostrarMenu() {
         mostarCabecera("M)ENU");
         pln("   A.- V)er los productos");
         pln("   B.- Retirar P)roducto");
-        if (modo == Modo.ADMIN) {
-        pln("   C.- R)ellenar Productos y Monedas");
-        pln("   D.- I)nforme");
-        pln("   E.- Exit/F)IN");
+        if (modo == ModoTerminal.ADMIN) {
+            pln("   C.- R)ellenar Productos y Monedas");
+            pln("   D.- I)nforme");
+            pln("   E.- Exit/F)IN");
         }
         pln();
         return modo;
     }
 
-    public void establecerModo(Modo nuevoModo) {
-            modo = nuevoModo;
+    public void establecerModo(ModoTerminal nuevoModo) {
+        modo = nuevoModo;
     }
 
     // === MOSTRAR DATOS ===
@@ -85,15 +101,48 @@ public class Terminal {
         pln(sb.toString());
     }
 
+    public void parseMuestraXML(String XMLdoc) {
+        String[][] muestra = {{"no"},{"si"}};
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            // Document doc = dBuilder.parse();
+            Document doc  = dBuilder.parse(new InputSource(new StringReader(XMLdoc)));
+
+            doc.getDocumentElement().normalize();
+            System.out.print("Root element: ");
+            System.out.println(doc.getDocumentElement().getNodeName());
+            Element root = doc.getDocumentElement();
+            NodeList productosList = doc.getElementsByTagName("producto");
+
+            muestra = new String[Integer.parseInt(root.getAttribute("filas"))][Integer.parseInt(root.getAttribute("columnas"))];
+            
+            for (int n = 0; n < productosList.getLength(); n++) {
+                Node nNode = productosList.item(n);
+                Element e = (Element) nNode;
+                muestra
+                    [Integer.parseInt(e.getAttribute("fila"))]
+                    [Integer.parseInt(e.getAttribute("columna"))]
+                    =
+                    e.getAttribute("nombre")+";"+
+                    e.getElementsByTagName("cero").item(0).getTextContent()+";"+
+                    e.getElementsByTagName("precio").item(0).getTextContent();     
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mostrarMuestra(muestra ); 
+   }   
+
     // === OBTENCION DE INPUT DE USUARIO ===
     public char leerOpcionMenu() {
         char opcion;
         while (true) {
             p("   Seleccione una opción: ");
             opcion = input.next().toUpperCase().charAt(0);
-            if (modo == Modo.NORMAL && normalOpt.indexOf(opcion) > -1)
+            if (modo == ModoTerminal.NORMAL && normalOpt.indexOf(opcion) > -1)
                 break;
-            if (modo == Modo.ADMIN && adminOpt.indexOf(opcion) > -1)
+            if (modo == ModoTerminal.ADMIN && adminOpt.indexOf(opcion) > -1)
                 break;
         }
         return opcion;
@@ -123,8 +172,8 @@ public class Terminal {
     public boolean opcionInformeSN() {
         p("¿Desea el informe (N)?");
         char opcion = input.next().toUpperCase().charAt(0);
-        return opcion=='S';
-	}
+        return opcion == 'S';
+    }
 
     public void leerEnter() {
         p("Presione <Enter> para continuar ");
@@ -134,12 +183,12 @@ public class Terminal {
 
     // == MENSAGES ==
     public void mostrarMsg(String format, Object... args) {
-        mostrarMsg(String.format( format, args));
-	}
+        mostrarMsg(String.format(format, args));
+    }
 
-	public void mostrarMsg(String string) {
+    public void mostrarMsg(String string) {
         pln(string);
-	}
+    }
 
     // === UTILIDADES ===
     private void pf(String format, Object... args) {
@@ -162,6 +211,5 @@ public class Terminal {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
 
 }
