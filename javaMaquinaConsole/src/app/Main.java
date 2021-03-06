@@ -6,6 +6,7 @@ import vending.hardware.subsistemas.productos.Dispensador;
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.seguridad.*;
 import vending.producto.*;
+
 import ui.*;
 
 public class Main {
@@ -27,10 +28,16 @@ public class Main {
                 { new Golosina("Gusanitos", 1.50), new Golosina("Crunch", 1.10), new Golosina("Milkybar", 1.10),
                         new Golosina("Patatas fritas", 1.10f) }, };
 
+        //IRepositorio repositorio = new RepositorioFile();
+        IRepositorio repositorio = new RepositorioFile();
         Dispensador dispensadorGolosinas = new Dispensador(matrizGolosinas);
         ISeguridad sistemaSeguridad = new SeguridadPin(new String[] { "1234", "2345" });
         ControladorDePagos sistemaPago = new ControladorDePagos();
-        Maquina mGomez = new Maquina("Golosinas Gómez", dispensadorGolosinas, sistemaSeguridad, sistemaPago);
+        MaquinaEstado mGomez = new MaquinaEstado("Golosinas Gómez", 
+                        dispensadorGolosinas, 
+                        sistemaSeguridad, 
+                        sistemaPago,
+                        repositorio);        
         Terminal terminal = new Terminal(mGomez.getName());
         Controlador controller = new Controlador(terminal, mGomez);
         controller.run();
