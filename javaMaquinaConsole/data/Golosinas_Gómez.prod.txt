@@ -1,0 +1,5 @@
+4:4
+Golosina;KitKat;false;1.10;10:Golosina;Chicles de fresa;false;0.80;10:Golosina;Lacasitos;false;1.50;10:Golosina;Palotes;false;0.90;10:
+Golosina;Kinder Bueno;false;1.80;10:Golosina;Bolsa Haribo;false;1.00;10:Golosina;Chetoos;false;1.20;10:Golosina;Twix;false;1.00;10:
+Golosina;Maiz;false;0.70;10:Golosina;M&M’S;false;1.30;10:Golosina;Papa Delta;false;1.20;9:Golosina;Chicles de menta;false;0.80;10:
+Golosina;Gusanitos;false;1.50;10:Golosina;Crunch;false;1.10;10:Golosina;Milkybar;false;1.10;10:Golosina;Patatas fritas;false;1.10;10:

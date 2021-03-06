@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public class Efectivo {
     //static final int MAXTIPOSMONEDAS = cantidad.length;
-    protected int[] cantidad = { 0, 0, 0, 0, 0 };
+    public int[] cantidad = { 0, 0, 0, 0, 0 };
     protected static final double[] valor = { 2, 1, .5, .2, .1 };
     private boolean valido = true;
 

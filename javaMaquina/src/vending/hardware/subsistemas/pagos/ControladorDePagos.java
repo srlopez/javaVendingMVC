@@ -11,11 +11,11 @@ public class ControladorDePagos {
     /**
      * caja de entrada de pagos y salida de cambios
      */
-    Efectivo caja;
+    public Efectivo caja;
     /**
      * importe de excesos de monedas acumulables en caja
      */
-    double cajon = 0;
+    public double cajon = 0;
 
     // operaciones realizadas
     private int nOperaciones = 0;

@@ -1,6 +1,6 @@
 package vending.hardware;
 
-import vending.hardware.subsistemas.*;
+import vending.repositorio.IRepositorio;
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.productos.Dispensador;
 import vending.hardware.subsistemas.seguridad.ISeguridad;

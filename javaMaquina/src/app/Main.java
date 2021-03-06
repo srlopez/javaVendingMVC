@@ -4,11 +4,10 @@ package app;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Main running ...");
-		System.out.println("Te recuerdo que estamos creando una Librería en java ...");
+		System.out.println("Te recuerdo que estamos creando javaMaquina.jar como Librería ...");
 		/*
 		Se incluye este main para recordar que se puede invocar
 		desde el proyecto javaMaquinaConsole.
-		(tambien lo puedes hacer desde aquí)
 
 		Crea un máquina de Golosinas "Golosinas Gómez" con la lista de productos que 
 		incluye el enunciado. El sistem de seguridad será por validación de PIN, 
