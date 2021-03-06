@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Efectivo {
-    //static final int MAXTIPOSMONEDAS = cantidad.length;
     public int[] cantidad = { 0, 0, 0, 0, 0 };
     protected static final double[] valor = { 2, 1, .5, .2, .1 };
+    public static final int MAXTIPOSMONEDAS = valor.length;
     private boolean valido = true;
 
     // Constructores
