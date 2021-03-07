@@ -1,9 +1,9 @@
 package vending.hardware;
 
-import vending.repositorio.IRepositorio;
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.productos.Dispensador;
 import vending.hardware.subsistemas.seguridad.ISeguridad;
+import vending.persistencia.IRepositorio;
 /*
   Hemos extenido la funcionalidad de la Maquina Original
   añadiendole "Estado" que se establece cuando se instancia

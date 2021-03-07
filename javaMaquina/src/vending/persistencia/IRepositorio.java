@@ -1,4 +1,4 @@
-package vending.repositorio;
+package vending.persistencia;
 
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.productos.Dispensador;
