@@ -111,7 +111,7 @@ public class Controlador {
                 terminal.mostrarMsg("Articulo no disponible");
                 return -1;
             }
-            terminal.mostrarMsg("Ha seleccionado `%s`.\n", maquina.obtenerNombreProdcuto(xy));
+            terminal.mostrarMsg("Ha seleccionado `%s`.\n", maquina.obtenerNombreProducto(xy));
             terminal.mostrarMsg("Introduzca %.2f€.\n", maquina.obtenerPrecio(xy));
 
             Efectivo pago = terminal.leerEfectivo();

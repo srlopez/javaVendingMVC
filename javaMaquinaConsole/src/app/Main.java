@@ -5,8 +5,8 @@ import vending.hardware.*;
 import vending.hardware.subsistemas.productos.Dispensador;
 import vending.hardware.subsistemas.pagos.ControladorDePagos;
 import vending.hardware.subsistemas.seguridad.*;
+import vending.persistencia.*;
 import vending.producto.*;
-import vending.repositorio.*;
 import ui.*;
 
 public class Main {
