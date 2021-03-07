@@ -66,11 +66,11 @@ public class Maquina {
         return seguridad.esValido(pin);
     };
 
+    // Interfaz de Controlador Pagos
     public int esPagoValido(Efectivo pago, double precio) {
         return ctrl.esPagoValido(pago, precio);
     }
 
-    // Interfaz de Controlador Pagos
     public Efectivo procederAlPago(Efectivo pago, double precio) {
         return ctrl.procederAlPago(pago, precio);
     }
@@ -110,7 +110,7 @@ public class Maquina {
         return dispensador.obtenerPrecio(coordenada(xy));
     }
 
-    public String obtenerNombreProdcuto(int xy) {
+    public String obtenerNombreProducto(int xy) {
         return dispensador.obtenerNombreProdcuto(coordenada(xy));
     }
 
